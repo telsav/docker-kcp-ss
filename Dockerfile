@@ -41,6 +41,6 @@ RUN set -ex && \
     apk --no-cache del build-base autoconf && \
     rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
 
-ADD entrypoint.sh /entrypoint.sh
+ADD entrypoint.sh /entrypoint.sh 
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
