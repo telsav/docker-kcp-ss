@@ -18,18 +18,18 @@ SS_METHOD=${SS_METHOD:-aes-256-cfb}                           #"method":"aes-256
 SS_TIMEOUT=${SS_TIMEOUT:-600}                                 #"timeout":600,
 SS_DNS_ADDR=${SS_DNS_ADDR:-8.8.8.8}                           #-d "8.8.8.8",
 SS_UDP=${SS_UDP:-true}                                        #-u support,
-SS_ONETIME_AUTH=${SS_ONETIME_AUTH:-true}                      #-A support,
+SS_ONETIME_AUTH=${SS_ONETIME_AUTH:-false}                     #-A support,
 SS_FAST_OPEN=${SS_FAST_OPEN:-true}                            #--fast-open support,
 # ======= KCPTUN CONFIG ======
-KCPTUN_LISTEN=${KCPTUN_LISTEN:-45678}                         #"listen": ":45678",
-KCPTUN_SS_LISTEN=${KCPTUN_SS_LISTEN:-34567}                   #"listen": ":45678", kcptun for ss listen port
+KCPTUN_LISTEN=${KCPTUN_LISTEN:-4441}                         #"listen": ":45678",
+KCPTUN_SS_LISTEN=${KCPTUN_SS_LISTEN:-4442}                   #"listen": ":45678", kcptun for ss listen port
 KCPTUN_SOCKS5_PORT=${KCPTUN_SOCKS5_PORT:-12948}               #"socks_port": 12948,
 KCPTUN_KEY=${KCPTUN_KEY:-password}                            #"key": "password",
-KCPTUN_CRYPT=${KCPTUN_CRYPT:-aes}                             #"crypt": "aes",
+KCPTUN_CRYPT=${KCPTUN_CRYPT:-salsa20}                         #"crypt": "salsa20",
 KCPTUN_MODE=${KCPTUN_MODE:-fast2}                             #"mode": "fast2",
-KCPTUN_MTU=${KCPTUN_MTU:-1350}                                #"mtu": 1350,
-KCPTUN_SNDWND=${KCPTUN_SNDWND:-1024}                          #"sndwnd": 1024,
-KCPTUN_RCVWND=${KCPTUN_RCVWND:-1024}                          #"rcvwnd": 1024,
+KCPTUN_MTU=${KCPTUN_MTU:-1400}                                #"mtu": 1400,
+KCPTUN_SNDWND=${KCPTUN_SNDWND:-2048}                          #"sndwnd": 2048,
+KCPTUN_RCVWND=${KCPTUN_RCVWND:-2048}                          #"rcvwnd": 2048,
 KCPTUN_NOCOMP=${KCPTUN_NOCOMP:-false}                         #"nocomp": false
 
 [ ! -f ${SS_CONF} ] && cat > ${SS_CONF}<<-EOF
@@ -69,7 +69,8 @@ fi
     "mtu": ${KCPTUN_MTU},
     "sndwnd": ${KCPTUN_SNDWND},
     "rcvwnd": ${KCPTUN_RCVWND},
-    "nocomp": false
+    "nocomp": false,
+    "dscp": 46
 }
 EOF
 [ ! -f ${KCPTUN_SS_CONF} ] && cat > ${KCPTUN_SS_CONF}<<-EOF
